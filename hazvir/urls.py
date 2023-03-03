@@ -14,8 +14,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from games.api.v1 import router as router_game
+from scores.api.v1 import router as router_score
+from users.api.v1 import router as router_user
+
+
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/',include(router_game)),
+    path('api/',include(router_score)),
+    path('api/',include(router_user)),
+    
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

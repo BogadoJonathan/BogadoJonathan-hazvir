@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
 from pathlib import Path
+from datetime import timedelta
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,7 +32,9 @@ ALLOWED_HOSTS = []
 
 # Application definition
 APPS_MIAS = [
-    'users'
+    'users',
+    'games',
+    'scores'
 ]
 
 APPS_DEFAULT = [
@@ -45,6 +49,8 @@ APPS_DEFAULT = [
 
 APPS_TERCEROS = [
     'rest_framework',
+    'django_quill',
+    'rest_framework_simplejwt'
 ]
 
 INSTALLED_APPS = APPS_MIAS + APPS_DEFAULT + APPS_TERCEROS
@@ -127,9 +133,29 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+MEDIA_URL = '/images/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,'static')
+]
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'static/images')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+# Configuración de JWT
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+}
