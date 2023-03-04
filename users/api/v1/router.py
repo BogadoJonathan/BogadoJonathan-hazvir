@@ -10,6 +10,6 @@ urlpatterns = [
     path('v1/token/',ObtainTokenPairWithEmailView.as_view(), name="token"),
     path('v1/token/refresh', RefreshTokenView.as_view(),name="token_refresh"),
     path('v1/users/',include(router_user.urls)),
-    #path('api/usuarios/', UsuarioViewSet.as_view({'get': 'list', 'post': 'create'}), name='usuario_list'),
+    #path('api/usuarios/', UserModelViewSet.as_view({'get': 'list', 'post': 'create'}), name='usuario_list'),
 
 ]
